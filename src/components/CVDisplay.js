@@ -3,7 +3,49 @@ import React from "react";
 const CVDisplay = (props) => {
   const { personalInfo, educationArray, experienceArray } = props;
 
-  return <div>{personalInfo.name}</div>;
+  return (
+    <div>
+      <div>
+        <h1>{personalInfo.name}</h1>
+      </div>
+      <div>
+        <div>CONTACT</div>
+        <h5>{personalInfo.email}</h5>
+        <h5>{personalInfo.phone}</h5>
+      </div>
+      <div>
+        <div>WORK EXPERIENCE</div>
+        <div>
+          {experienceArray.map((e) => {
+            return (
+              <div key={e.id}>
+                <div>{e.company}</div>
+                <div>{e.position}</div>
+                <div>{e.tasks}</div>
+                <div>{e.dateFrom}</div>
+                <div>{e.dateTo}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div>
+        <div>EDUCATION</div>
+        <div>
+          {educationArray.map((e) => {
+            return (
+              <div key={e.id}>
+                <div>{e.institution}</div>
+                <div>{e.title}</div>
+                <div>{e.titleDate}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default CVDisplay;

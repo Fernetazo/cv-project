@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CVDisplay from "./components/CVDisplay";
+import uniqid from "uniqid";
 
 class App extends Component {
   constructor() {
@@ -8,9 +9,10 @@ class App extends Component {
     this.state = {
       personalInfo: { name: "", email: "", phone: "" },
 
-      eduInfo: { institution: "", title: "", titleDate: "" },
+      eduInfo: { id: uniqid(), institution: "", title: "", titleDate: "" },
 
       expInfo: {
+        id: uniqid(),
         company: "",
         position: "",
         tasks: "",
@@ -36,8 +38,8 @@ class App extends Component {
   handleEmailChange = (e) => {
     this.setState({
       personalInfo: {
-        email: e.target.value,
         name: this.state.personalInfo.name,
+        email: e.target.value,
         phone: this.state.personalInfo.phone,
       },
     });
@@ -46,9 +48,9 @@ class App extends Component {
   handlePhoneChange = (e) => {
     this.setState({
       personalInfo: {
-        phone: e.target.value,
         name: this.state.personalInfo.name,
         email: this.state.personalInfo.email,
+        phone: e.target.value,
       },
     });
   };
@@ -56,6 +58,7 @@ class App extends Component {
   handleInstitutionChange = (e) => {
     this.setState({
       eduInfo: {
+        id: this.state.eduInfo.id,
         institution: e.target.value,
         title: this.state.eduInfo.title,
         titleDate: this.state.eduInfo.titleDate,
@@ -66,8 +69,9 @@ class App extends Component {
   handleTitleChange = (e) => {
     this.setState({
       eduInfo: {
-        title: e.target.value,
+        id: this.state.eduInfo.id,
         institution: this.state.eduInfo.institution,
+        title: e.target.value,
         titleDate: this.state.eduInfo.titleDate,
       },
     });
@@ -76,9 +80,10 @@ class App extends Component {
   handleTitleDateChange = (e) => {
     this.setState({
       eduInfo: {
-        titleDate: e.target.value,
+        id: this.state.eduInfo.id,
         institution: this.state.eduInfo.institution,
         title: this.state.eduInfo.title,
+        titleDate: e.target.value,
       },
     });
   };
@@ -86,6 +91,7 @@ class App extends Component {
   handleCompanyChange = (e) => {
     this.setState({
       expInfo: {
+        id: this.state.expInfo.id,
         company: e.target.value,
         position: this.state.expInfo.position,
         tasks: this.state.expInfo.tasks,
@@ -98,8 +104,9 @@ class App extends Component {
   handlePositionChange = (e) => {
     this.setState({
       expInfo: {
-        position: e.target.value,
+        id: this.state.expInfo.id,
         company: this.state.expInfo.company,
+        position: e.target.value,
         tasks: this.state.expInfo.tasks,
         dateFrom: this.state.expInfo.dateFrom,
         dateTo: this.state.expInfo.dateTo,
@@ -110,9 +117,10 @@ class App extends Component {
   handleTasksChange = (e) => {
     this.setState({
       expInfo: {
-        tasks: e.target.value,
+        id: this.state.expInfo.id,
         company: this.state.expInfo.company,
         position: this.state.expInfo.position,
+        tasks: e.target.value,
         dateFrom: this.state.expInfo.dateFrom,
         dateTo: this.state.expInfo.dateTo,
       },
@@ -122,10 +130,11 @@ class App extends Component {
   handleDateFromChange = (e) => {
     this.setState({
       expInfo: {
-        dateFrom: e.target.value,
+        id: this.state.expInfo.id,
         company: this.state.expInfo.company,
         position: this.state.expInfo.position,
         tasks: this.state.expInfo.tasks,
+        dateFrom: e.target.value,
         dateTo: this.state.expInfo.dateTo,
       },
     });
@@ -134,11 +143,12 @@ class App extends Component {
   handleDateToChange = (e) => {
     this.setState({
       expInfo: {
-        dateTo: e.target.value,
+        id: this.state.expInfo.id,
         company: this.state.expInfo.company,
         position: this.state.expInfo.position,
         tasks: this.state.expInfo.tasks,
         dateFrom: this.state.expInfo.dateFrom,
+        dateTo: e.target.value,
       },
     });
   };
@@ -147,6 +157,7 @@ class App extends Component {
     this.setState({
       educationArray: this.state.educationArray.concat(this.state.eduInfo),
       eduInfo: {
+        id: uniqid(),
         institution: "",
         title: "",
         titleDate: "",
@@ -158,12 +169,63 @@ class App extends Component {
     this.setState({
       experienceArray: this.state.experienceArray.concat(this.state.expInfo),
       expInfo: {
+        id: uniqid(),
         company: "",
         position: "",
         tasks: "",
         dateFrom: "",
         dateTo: "",
       },
+    });
+  };
+
+  loadExample = (e) => {
+    this.setState({
+      personalInfo: {
+        name: "John Doe",
+        email: "jdoe@nobody.com",
+        phone: "555-5453",
+      },
+      educationArray: [
+        {
+          id: uniqid(),
+          institution: "Harvard University",
+          title: "Computer Science degree",
+          titleDate: "2022",
+        },
+        {
+          id: uniqid(),
+          institution: "Royal School of Science",
+          title: "Technician computer",
+          titleDate: "2006",
+        },
+      ],
+      experienceArray: [
+        {
+          id: uniqid(),
+          company: "IBM",
+          position: "Fullstack web developer",
+          tasks: "Make webpages. Testing",
+          dateFrom: "2018",
+          dateTo: "2022",
+        },
+        {
+          id: uniqid(),
+          company: "ICBC",
+          position: "Cyber security",
+          tasks: "Overall secirity of the bank's webpage.",
+          dateFrom: "2017",
+          dateTo: "2014",
+        },
+        {
+          id: uniqid(),
+          company: "IBM",
+          position: "ATM technician",
+          tasks: "Repair and maintenance of ATM machines.",
+          dateFrom: "2017",
+          dateTo: "2014",
+        },
+      ],
     });
   };
 
@@ -269,6 +331,7 @@ class App extends Component {
           <br></br>
           <button type="submit">SUBMIT CV</button>
         </form>
+        <button onClick={this.loadExample}>CV example</button>
         <CVDisplay
           personalInfo={personalInfo}
           educationArray={educationArray}
