@@ -229,6 +229,26 @@ class App extends Component {
     });
   };
 
+  resetForm = (e) => {
+    this.setState({
+      personalInfo: { name: "", email: "", phone: "" },
+
+      eduInfo: { id: uniqid(), institution: "", title: "", titleDate: "" },
+
+      expInfo: {
+        id: uniqid(),
+        company: "",
+        position: "",
+        tasks: "",
+        dateFrom: "",
+        dateTo: "",
+      },
+
+      educationArray: [],
+      experienceArray: [],
+    });
+  };
+
   onSubmitCV = (e) => {
     e.preventDefault();
   };
@@ -329,9 +349,10 @@ class App extends Component {
           </div>
           <br></br>
           <br></br>
-          <button type="submit">SUBMIT CV</button>
         </form>
+        <button type="submit">SUBMIT CV</button>
         <button onClick={this.loadExample}>CV example</button>
+        <button onClick={this.resetForm}>Reset form</button>
         <CVDisplay
           personalInfo={personalInfo}
           educationArray={educationArray}
