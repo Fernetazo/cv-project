@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CVDisplay from "./components/CVDisplay";
 
 class App extends Component {
   constructor() {
@@ -177,12 +178,11 @@ class App extends Component {
       <div>
         <form onSubmit={this.onSubmitCV}>
           <div className="section">
-            <label htmlFor="nameInput">Name:</label>
+            <label>Name:</label>
             <input
               type="text"
               onChange={this.handleNameChange}
               value={personalInfo.name}
-              id="nameInput"
             ></input>
             <br></br>
             <label>E-mail:</label>
@@ -269,6 +269,11 @@ class App extends Component {
           <br></br>
           <button type="submit">SUBMIT CV</button>
         </form>
+        <CVDisplay
+          personalInfo={personalInfo}
+          educationArray={educationArray}
+          experienceArray={experienceArray}
+        />
       </div>
     );
   }
