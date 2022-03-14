@@ -22,8 +22,9 @@ const CVDisplay = (props) => {
                 <div>{e.company}</div>
                 <div>{e.position}</div>
                 <div>{e.tasks}</div>
-                <div>{e.dateFrom}</div>
-                <div>{e.dateTo}</div>
+                <div>
+                  {e.dateFrom}-{e.dateTo}
+                </div>
               </div>
             );
           })}

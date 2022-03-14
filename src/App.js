@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CVDisplay from "./components/CVDisplay";
+import EduInput from "./components/EduInput";
 import uniqid from "uniqid";
 
 class App extends Component {
@@ -9,19 +10,19 @@ class App extends Component {
     this.state = {
       personalInfo: { name: "", email: "", phone: "" },
 
-      eduInfo: { id: uniqid(), institution: "", title: "", titleDate: "" },
-
-      expInfo: {
-        id: uniqid(),
-        company: "",
-        position: "",
-        tasks: "",
-        dateFrom: "",
-        dateTo: "",
-      },
-
-      educationArray: [],
-      experienceArray: [],
+      educationArray: [
+        { id: uniqid(), institution: "", title: "", titleDate: "" },
+      ],
+      experienceArray: [
+        {
+          id: uniqid(),
+          company: "",
+          position: "",
+          tasks: "",
+          dateFrom: "",
+          dateTo: "",
+        },
+      ],
     };
   }
 
@@ -56,36 +57,42 @@ class App extends Component {
   };
 
   handleInstitutionChange = (e) => {
-    this.setState({
-      eduInfo: {
-        id: this.state.eduInfo.id,
-        institution: e.target.value,
-        title: this.state.eduInfo.title,
-        titleDate: this.state.eduInfo.titleDate,
-      },
-    });
+    let i = e.target.getAttribute("index");
+    let input = e.target.value;
+    let eduArray = this.state.educationArray;
+
+    eduArray[i] = {
+      ...eduArray[i],
+      institution: input,
+    };
+
+    this.setState({ educationArray: eduArray });
   };
 
   handleTitleChange = (e) => {
-    this.setState({
-      eduInfo: {
-        id: this.state.eduInfo.id,
-        institution: this.state.eduInfo.institution,
-        title: e.target.value,
-        titleDate: this.state.eduInfo.titleDate,
-      },
-    });
+    let i = e.target.getAttribute("index");
+    let input = e.target.value;
+    let eduArray = this.state.educationArray;
+
+    eduArray[i] = {
+      ...eduArray[i],
+      title: input,
+    };
+
+    this.setState({ educationArray: eduArray });
   };
 
   handleTitleDateChange = (e) => {
-    this.setState({
-      eduInfo: {
-        id: this.state.eduInfo.id,
-        institution: this.state.eduInfo.institution,
-        title: this.state.eduInfo.title,
-        titleDate: e.target.value,
-      },
-    });
+    let i = e.target.getAttribute("index");
+    let input = e.target.value;
+    let eduArray = this.state.educationArray;
+
+    eduArray[i] = {
+      ...eduArray[i],
+      titleDate: input,
+    };
+
+    this.setState({ educationArray: eduArray });
   };
 
   handleCompanyChange = (e) => {
@@ -154,16 +161,19 @@ class App extends Component {
   };
 
   addEdu = () => {
+    let newEmpty = {
+      id: uniqid(),
+      institution: "",
+      title: "",
+      titleDate: "",
+    };
+
     this.setState({
-      educationArray: this.state.educationArray.concat(this.state.eduInfo),
-      eduInfo: {
-        id: uniqid(),
-        institution: "",
-        title: "",
-        titleDate: "",
-      },
+      educationArray: this.state.educationArray.concat(newEmpty),
     });
   };
+
+  deleteEdu = () => {};
 
   addExp = () => {
     this.setState({
@@ -258,98 +268,86 @@ class App extends Component {
       this.state;
     return (
       <div>
-        <form onSubmit={this.onSubmitCV}>
-          <div className="section">
-            <label>Name:</label>
-            <input
-              type="text"
-              onChange={this.handleNameChange}
-              value={personalInfo.name}
-            ></input>
+        <div>
+          <form onSubmit={this.onSubmitCV}>
+            <div className="section">
+              <label>Name:</label>
+              <input
+                type="text"
+                onChange={this.handleNameChange}
+                value={personalInfo.name}
+              ></input>
+              <br></br>
+              <label>E-mail:</label>
+              <input
+                value={personalInfo.email}
+                type="email"
+                onChange={this.handleEmailChange}
+              ></input>
+              <br></br>
+              <label>Phone:</label>
+              <input
+                value={personalInfo.phone}
+                type="number"
+                onChange={this.handlePhoneChange}
+              ></input>
+            </div>
             <br></br>
-            <label>E-mail:</label>
-            <input
-              value={personalInfo.email}
-              type="email"
-              onChange={this.handleEmailChange}
-            ></input>
-            <br></br>
-            <label>Phone:</label>
-            <input
-              value={personalInfo.phone}
-              type="number"
-              onChange={this.handlePhoneChange}
-            ></input>
-          </div>
-          <br></br>
 
-          <div className="section">
-            <label>Institution:</label>
-            <input
-              value={eduInfo.institution}
-              type="text"
-              onChange={this.handleInstitutionChange}
-            ></input>
+            <div className="section">
+              <EduInput
+                educationArray={educationArray}
+                handleInstitutionChange={this.handleInstitutionChange}
+                handleTitleChange={this.handleTitleChange}
+                handleTitleDateChange={this.handleTitleDateChange}
+                deleteEdu={this.deleteEdu}
+              />
+              <button onClick={this.addEdu}>Add education info</button>
+            </div>
             <br></br>
-            <label>Title:</label>
-            <input
-              value={eduInfo.title}
-              type="text"
-              onChange={this.handleTitleChange}
-            ></input>
-            <br></br>
-            <label>Title date:</label>
-            <input
-              value={eduInfo.titleDate}
-              type="date"
-              onChange={this.handleTitleDateChange}
-            ></input>
-            <br></br>
-            <button onClick={this.addEdu}>Add education info</button>
-          </div>
-          <br></br>
 
-          <div className="section">
-            <label>Company name:</label>
-            <input
-              value={expInfo.company}
-              type="text"
-              onChange={this.handleCompanyChange}
-            ></input>
+            {/**<div className="section">
+              <label>Company name:</label>
+              <input
+                value={expInfo.company}
+                type="text"
+                onChange={this.handleCompanyChange}
+              ></input>
+              <br></br>
+              <label>Position title:</label>
+              <input
+                value={expInfo.position}
+                type="text"
+                onChange={this.handlePositionChange}
+              ></input>
+              <br></br>
+              <label>Tasks description:</label>
+              <input
+                value={expInfo.tasks}
+                type="text"
+                onChange={this.handleTasksChange}
+              ></input>
+              <br></br>
+              <label>Date from:</label>
+              <input
+                value={expInfo.dateFrom}
+                type="date"
+                onChange={this.handleDateFromChange}
+              ></input>
+              <br></br>
+              <label>Date to:</label>
+              <input
+                value={expInfo.dateTo}
+                type="date"
+                onChange={this.handleDateToChange}
+              ></input>
+              <br></br>
+              <button onClick={this.addExp}>Add experience info</button>
+            </div>*/}
             <br></br>
-            <label>Position title:</label>
-            <input
-              value={expInfo.position}
-              type="text"
-              onChange={this.handlePositionChange}
-            ></input>
             <br></br>
-            <label>Tasks description:</label>
-            <input
-              value={expInfo.tasks}
-              type="text"
-              onChange={this.handleTasksChange}
-            ></input>
-            <br></br>
-            <label>Date from:</label>
-            <input
-              value={expInfo.dateFrom}
-              type="date"
-              onChange={this.handleDateFromChange}
-            ></input>
-            <br></br>
-            <label>Date to:</label>
-            <input
-              value={expInfo.dateTo}
-              type="date"
-              onChange={this.handleDateToChange}
-            ></input>
-            <br></br>
-            <button onClick={this.addExp}>Add experience info</button>
-          </div>
-          <br></br>
-          <br></br>
-        </form>
+          </form>
+        </div>
         <button type="submit">SUBMIT CV</button>
         <button onClick={this.loadExample}>CV example</button>
         <button onClick={this.resetForm}>Reset form</button>
