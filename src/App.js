@@ -173,7 +173,14 @@ class App extends Component {
     });
   };
 
-  deleteEdu = () => {};
+  deleteEdu = (e) => {
+    let i = parseInt(e.target.getAttribute("index"));
+
+    let filteredArray = this.state.educationArray.filter(
+      (ee, index) => index !== i
+    );
+    this.setState({ educationArray: filteredArray });
+  };
 
   addExp = () => {
     this.setState({

@@ -42,7 +42,9 @@ const EduInput = (props) => {
               ></input>
               <br></br>
 
-              <button onClick={deleteEdu}>Delete this item</button>
+              <button index={index} onClick={deleteEdu}>
+                Delete this item
+              </button>
             </div>
           );
         })}
