@@ -21,6 +21,7 @@ const ExpInput = (props) => {
               <input
                 type="text"
                 index={index}
+                value={e.company}
                 onChange={handleCompanyChange}
               ></input>
               <br></br>
@@ -29,6 +30,7 @@ const ExpInput = (props) => {
               <input
                 type="text"
                 index={index}
+                value={e.position}
                 onChange={handlePositionChange}
               ></input>
               <br></br>
@@ -37,6 +39,7 @@ const ExpInput = (props) => {
               <input
                 type="text"
                 index={index}
+                value={e.tasks}
                 onChange={handleTasksChange}
               ></input>
               <br></br>
@@ -45,6 +48,7 @@ const ExpInput = (props) => {
               <input
                 type="date"
                 index={index}
+                value={e.dateFrom}
                 onChange={handleDateFromChange}
               ></input>
               <br></br>
@@ -53,6 +57,7 @@ const ExpInput = (props) => {
               <input
                 type="date"
                 index={index}
+                value={e.dateTo}
                 onChange={handleDateToChange}
               ></input>
               <br></br>

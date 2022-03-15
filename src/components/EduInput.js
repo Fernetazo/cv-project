@@ -17,27 +17,27 @@ const EduInput = (props) => {
             <div key={e.id}>
               <label>Institution:</label>
               <input
-                //value={e.institution}
                 type="text"
                 index={index}
+                value={e.institution}
                 onChange={handleInstitutionChange}
               ></input>
               <br></br>
 
               <label>Title:</label>
               <input
-                //value={eduInfo.title}
                 type="text"
                 index={index}
+                value={e.title}
                 onChange={handleTitleChange}
               ></input>
               <br></br>
 
               <label>Title date:</label>
               <input
-                //value={eduInfo.titleDate}
                 type="date"
                 index={index}
+                value={e.titleDate}
                 onChange={handleTitleDateChange}
               ></input>
               <br></br>

@@ -261,19 +261,19 @@ class App extends Component {
     this.setState({
       personalInfo: { name: "", email: "", phone: "" },
 
-      eduInfo: { id: uniqid(), institution: "", title: "", titleDate: "" },
-
-      expInfo: {
-        id: uniqid(),
-        company: "",
-        position: "",
-        tasks: "",
-        dateFrom: "",
-        dateTo: "",
-      },
-
-      educationArray: [],
-      experienceArray: [],
+      educationArray: [
+        { id: uniqid(), institution: "", title: "", titleDate: "" },
+      ],
+      experienceArray: [
+        {
+          id: uniqid(),
+          company: "",
+          position: "",
+          tasks: "",
+          dateFrom: "",
+          dateTo: "",
+        },
+      ],
     });
   };
 
