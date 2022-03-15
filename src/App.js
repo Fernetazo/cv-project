@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import uniqid from "uniqid";
 import CVDisplay from "./components/CVDisplay";
 import EduInput from "./components/EduInput";
-import uniqid from "uniqid";
+import ExpInput from "./components/ExpInput";
 
 class App extends Component {
   constructor() {
@@ -85,79 +86,79 @@ class App extends Component {
   handleTitleDateChange = (e) => {
     let i = e.target.getAttribute("index");
     let input = e.target.value;
-    let eduArray = this.state.educationArray;
+    let copyArray = this.state.educationArray;
 
-    eduArray[i] = {
-      ...eduArray[i],
+    copyArray[i] = {
+      ...copyArray[i],
       titleDate: input,
     };
 
-    this.setState({ educationArray: eduArray });
+    this.setState({ educationArray: copyArray });
   };
 
   handleCompanyChange = (e) => {
-    this.setState({
-      expInfo: {
-        id: this.state.expInfo.id,
-        company: e.target.value,
-        position: this.state.expInfo.position,
-        tasks: this.state.expInfo.tasks,
-        dateFrom: this.state.expInfo.dateFrom,
-        dateTo: this.state.expInfo.dateTo,
-      },
-    });
+    let i = e.target.getAttribute("index");
+    let input = e.target.value;
+    let copyArray = this.state.experienceArray;
+
+    copyArray[i] = {
+      ...copyArray[i],
+      company: input,
+    };
+
+    this.setState({ experienceArray: copyArray });
   };
 
   handlePositionChange = (e) => {
-    this.setState({
-      expInfo: {
-        id: this.state.expInfo.id,
-        company: this.state.expInfo.company,
-        position: e.target.value,
-        tasks: this.state.expInfo.tasks,
-        dateFrom: this.state.expInfo.dateFrom,
-        dateTo: this.state.expInfo.dateTo,
-      },
-    });
+    let i = e.target.getAttribute("index");
+    let input = e.target.value;
+    let copyArray = this.state.experienceArray;
+
+    copyArray[i] = {
+      ...copyArray[i],
+      position: input,
+    };
+
+    this.setState({ experienceArray: copyArray });
   };
 
   handleTasksChange = (e) => {
-    this.setState({
-      expInfo: {
-        id: this.state.expInfo.id,
-        company: this.state.expInfo.company,
-        position: this.state.expInfo.position,
-        tasks: e.target.value,
-        dateFrom: this.state.expInfo.dateFrom,
-        dateTo: this.state.expInfo.dateTo,
-      },
-    });
+    let i = e.target.getAttribute("index");
+    let input = e.target.value;
+    let copyArray = this.state.experienceArray;
+
+    copyArray[i] = {
+      ...copyArray[i],
+      tasks: input,
+    };
+
+    this.setState({ experienceArray: copyArray });
   };
 
   handleDateFromChange = (e) => {
-    this.setState({
-      expInfo: {
-        id: this.state.expInfo.id,
-        company: this.state.expInfo.company,
-        position: this.state.expInfo.position,
-        tasks: this.state.expInfo.tasks,
-        dateFrom: e.target.value,
-        dateTo: this.state.expInfo.dateTo,
-      },
-    });
+    let i = e.target.getAttribute("index");
+    let input = e.target.value;
+    let copyArray = this.state.experienceArray;
+
+    copyArray[i] = {
+      ...copyArray[i],
+      dateFrom: input,
+    };
+
+    this.setState({ experienceArray: copyArray });
   };
 
   handleDateToChange = (e) => {
-    this.setState({
-      expInfo: {
-        id: this.state.expInfo.id,
-        company: this.state.expInfo.company,
-        position: this.state.expInfo.position,
-        tasks: this.state.expInfo.tasks,
-        dateFrom: this.state.expInfo.dateFrom,
-        dateTo: e.target.value,
-      },
-    });
+    let i = e.target.getAttribute("index");
+    let input = e.target.value;
+    let copyArray = this.state.experienceArray;
+
+    copyArray[i] = {
+      ...copyArray[i],
+      dateTo: input,
+    };
+
+    this.setState({ experienceArray: copyArray });
   };
 
   addEdu = () => {
@@ -177,23 +178,33 @@ class App extends Component {
     let i = parseInt(e.target.getAttribute("index"));
 
     let filteredArray = this.state.educationArray.filter(
-      (ee, index) => index !== i
+      (e, index) => index !== i
     );
     this.setState({ educationArray: filteredArray });
   };
 
   addExp = () => {
+    let newEmpty = {
+      id: uniqid(),
+      company: "",
+      position: "",
+      tasks: "",
+      dateFrom: "",
+      dateTo: "",
+    };
+
     this.setState({
-      experienceArray: this.state.experienceArray.concat(this.state.expInfo),
-      expInfo: {
-        id: uniqid(),
-        company: "",
-        position: "",
-        tasks: "",
-        dateFrom: "",
-        dateTo: "",
-      },
+      experienceArray: this.state.experienceArray.concat(newEmpty),
     });
+  };
+
+  deleteExp = (e) => {
+    let i = parseInt(e.target.getAttribute("index"));
+
+    let filteredArray = this.state.experienceArray.filter(
+      (e, index) => index !== i
+    );
+    this.setState({ experienceArray: filteredArray });
   };
 
   loadExample = (e) => {
@@ -271,8 +282,7 @@ class App extends Component {
   };
 
   render() {
-    const { personalInfo, eduInfo, expInfo, educationArray, experienceArray } =
-      this.state;
+    const { personalInfo, educationArray, experienceArray } = this.state;
     return (
       <div>
         <div>
@@ -313,44 +323,18 @@ class App extends Component {
             </div>
             <br></br>
 
-            {/**<div className="section">
-              <label>Company name:</label>
-              <input
-                value={expInfo.company}
-                type="text"
-                onChange={this.handleCompanyChange}
-              ></input>
-              <br></br>
-              <label>Position title:</label>
-              <input
-                value={expInfo.position}
-                type="text"
-                onChange={this.handlePositionChange}
-              ></input>
-              <br></br>
-              <label>Tasks description:</label>
-              <input
-                value={expInfo.tasks}
-                type="text"
-                onChange={this.handleTasksChange}
-              ></input>
-              <br></br>
-              <label>Date from:</label>
-              <input
-                value={expInfo.dateFrom}
-                type="date"
-                onChange={this.handleDateFromChange}
-              ></input>
-              <br></br>
-              <label>Date to:</label>
-              <input
-                value={expInfo.dateTo}
-                type="date"
-                onChange={this.handleDateToChange}
-              ></input>
-              <br></br>
+            <div className="section">
+              <ExpInput
+                experienceArray={experienceArray}
+                handleCompanyChange={this.handleCompanyChange}
+                handlePositionChange={this.handlePositionChange}
+                handleTasksChange={this.handleTasksChange}
+                handleDateFromChange={this.handleDateFromChange}
+                handleDateToChange={this.handleDateToChange}
+                deleteExp={this.deleteExp}
+              />
               <button onClick={this.addExp}>Add experience info</button>
-            </div>*/}
+            </div>
             <br></br>
             <br></br>
           </form>
