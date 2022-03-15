@@ -10,6 +10,8 @@ class App extends Component {
     super();
 
     this.state = {
+      isEditing: true,
+
       personalInfo: { name: "", email: "", phone: "" },
 
       educationArray: [
@@ -114,7 +116,7 @@ class App extends Component {
     this.setState({ experienceArray: filteredArray });
   };
 
-  loadExample = (e) => {
+  loadExample = () => {
     this.setState({
       personalInfo: {
         name: "John Doe",
@@ -164,7 +166,7 @@ class App extends Component {
     });
   };
 
-  resetForm = (e) => {
+  resetForm = () => {
     this.setState({
       personalInfo: { name: "", email: "", phone: "" },
 
@@ -186,50 +188,70 @@ class App extends Component {
 
   onSubmitCV = (e) => {
     e.preventDefault();
+
+    if (this.state.isEditing === true) {
+      this.setState({ isEditing: false });
+    } else {
+      this.setState({ isEditing: true });
+    }
   };
 
   render() {
-    const { personalInfo, educationArray, experienceArray } = this.state;
+    const { isEditing, personalInfo, educationArray, experienceArray } =
+      this.state;
+
+    const ToggleCV = () => {
+      if (this.state.isEditing === true) {
+        return <button type="submit">SUBMIT CV</button>;
+      } else {
+        return <button type="submit">EDIT CV</button>;
+      }
+    };
+
     return (
-      <div>
-        <div>
+      <div className="main">
+        <div className="leftSide">
           <form onSubmit={this.onSubmitCV}>
-            <div className="section">
-              <PersonalInput
-                personalInfo={personalInfo}
-                handlePersonalChange={this.handlePersonalChange}
-              />
-            </div>
-            <br></br>
+            <fieldset disabled={!this.state.isEditing}>
+              <div className="section">
+                <PersonalInput
+                  personalInfo={personalInfo}
+                  handlePersonalChange={this.handlePersonalChange}
+                />
+              </div>
+              <br></br>
 
-            <div className="section">
-              <EduInput
-                educationArray={educationArray}
-                handleEducationChange={this.handleEducationChange}
-                deleteEdu={this.deleteEdu}
-              />
-              <button onClick={this.addEdu}>Add education info</button>
-            </div>
-            <br></br>
+              <div className="section">
+                <EduInput
+                  educationArray={educationArray}
+                  handleEducationChange={this.handleEducationChange}
+                  deleteEdu={this.deleteEdu}
+                  addEdu={this.addEdu}
+                />
+              </div>
+              <br></br>
 
-            <div className="section">
-              <ExpInput
-                experienceArray={experienceArray}
-                handleExperienceChange={this.handleExperienceChange}
-                deleteExp={this.deleteExp}
-              />
-              <button onClick={this.addExp}>Add experience info</button>
-            </div>
-            <br></br>
-            <br></br>
+              <div className="section">
+                <ExpInput
+                  experienceArray={experienceArray}
+                  handleExperienceChange={this.handleExperienceChange}
+                  deleteExp={this.deleteExp}
+                  addExp={this.addExp}
+                />
+              </div>
+              <br></br>
+              <br></br>
+            </fieldset>
+
+            <ToggleCV />
           </form>
-          <div>
-            <button type="submit">SUBMIT CV</button>
+          <div className="buttons">
             <button onClick={this.loadExample}>CV example</button>
             <button onClick={this.resetForm}>Reset form</button>
           </div>
         </div>
         <CVDisplay
+          isEditing={isEditing}
           personalInfo={personalInfo}
           educationArray={educationArray}
           experienceArray={experienceArray}

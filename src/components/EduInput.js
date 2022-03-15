@@ -1,7 +1,7 @@
 import React from "react";
 
 const EduInput = (props) => {
-  const { educationArray, handleEducationChange, deleteEdu } = props;
+  const { educationArray, handleEducationChange, deleteEdu, addEdu } = props;
 
   return (
     <div>
@@ -46,6 +46,8 @@ const EduInput = (props) => {
             </div>
           );
         })}
+        <br></br>
+        <button onClick={addEdu}>Add education info</button>
       </div>
       <br></br>
     </div>

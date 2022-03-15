@@ -1,7 +1,7 @@
 import React from "react";
 
 const ExpInput = (props) => {
-  const { experienceArray, handleExperienceChange, deleteExp } = props;
+  const { experienceArray, handleExperienceChange, deleteExp, addExp } = props;
 
   return (
     <div>
@@ -67,6 +67,8 @@ const ExpInput = (props) => {
             </div>
           );
         })}
+        <br></br>
+        <button onClick={addExp}>Add experience info</button>
       </div>
       <br></br>
     </div>

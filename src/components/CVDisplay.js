@@ -1,10 +1,15 @@
 import React from "react";
 
 const CVDisplay = (props) => {
-  const { personalInfo, educationArray, experienceArray } = props;
+  const { isEditing, personalInfo, educationArray, experienceArray } = props;
+
+  let className = "rightSide";
+  if (isEditing === false) {
+    className += " active";
+  }
 
   return (
-    <div>
+    <div className={className}>
       <div>
         <h1>{personalInfo.name}</h1>
       </div>
