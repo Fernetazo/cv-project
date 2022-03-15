@@ -1,13 +1,7 @@
 import React from "react";
 
 const EduInput = (props) => {
-  const {
-    educationArray,
-    handleInstitutionChange,
-    handleTitleChange,
-    handleTitleDateChange,
-    deleteEdu,
-  } = props;
+  const { educationArray, handleEducationChange, deleteEdu } = props;
 
   return (
     <div>
@@ -20,7 +14,8 @@ const EduInput = (props) => {
                 type="text"
                 index={index}
                 value={e.institution}
-                onChange={handleInstitutionChange}
+                name="institution"
+                onChange={handleEducationChange}
               ></input>
               <br></br>
 
@@ -29,16 +24,19 @@ const EduInput = (props) => {
                 type="text"
                 index={index}
                 value={e.title}
-                onChange={handleTitleChange}
+                name="title"
+                onChange={handleEducationChange}
               ></input>
               <br></br>
 
               <label>Title date:</label>
               <input
-                type="date"
+                type="number"
                 index={index}
                 value={e.titleDate}
-                onChange={handleTitleDateChange}
+                placeholder="In years"
+                name="titleDate"
+                onChange={handleEducationChange}
               ></input>
               <br></br>
 
@@ -49,9 +47,6 @@ const EduInput = (props) => {
           );
         })}
       </div>
-
-      <br></br>
-
       <br></br>
     </div>
   );

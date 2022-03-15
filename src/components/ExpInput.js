@@ -1,15 +1,7 @@
 import React from "react";
 
 const ExpInput = (props) => {
-  const {
-    experienceArray,
-    handleCompanyChange,
-    handlePositionChange,
-    handleTasksChange,
-    handleDateFromChange,
-    handleDateToChange,
-    deleteExp,
-  } = props;
+  const { experienceArray, handleExperienceChange, deleteExp } = props;
 
   return (
     <div>
@@ -22,7 +14,8 @@ const ExpInput = (props) => {
                 type="text"
                 index={index}
                 value={e.company}
-                onChange={handleCompanyChange}
+                name="company"
+                onChange={handleExperienceChange}
               ></input>
               <br></br>
 
@@ -31,7 +24,8 @@ const ExpInput = (props) => {
                 type="text"
                 index={index}
                 value={e.position}
-                onChange={handlePositionChange}
+                name="position"
+                onChange={handleExperienceChange}
               ></input>
               <br></br>
 
@@ -40,25 +34,30 @@ const ExpInput = (props) => {
                 type="text"
                 index={index}
                 value={e.tasks}
-                onChange={handleTasksChange}
+                name="tasks"
+                onChange={handleExperienceChange}
               ></input>
               <br></br>
 
               <label>Date from:</label>
               <input
-                type="date"
+                type="number"
                 index={index}
                 value={e.dateFrom}
-                onChange={handleDateFromChange}
+                placeholder="In years"
+                name="dateFrom"
+                onChange={handleExperienceChange}
               ></input>
               <br></br>
 
               <label>Date to:</label>
               <input
-                type="date"
+                type="number"
                 index={index}
                 value={e.dateTo}
-                onChange={handleDateToChange}
+                placeholder="In years"
+                name="dateTo"
+                onChange={handleExperienceChange}
               ></input>
               <br></br>
 
@@ -69,9 +68,6 @@ const ExpInput = (props) => {
           );
         })}
       </div>
-
-      <br></br>
-
       <br></br>
     </div>
   );

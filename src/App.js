@@ -27,135 +27,41 @@ class App extends Component {
     };
   }
 
-  handleNameChange = (e) => {
-    this.setState({
-      personalInfo: {
-        name: e.target.value,
-        email: this.state.personalInfo.email,
-        phone: this.state.personalInfo.phone,
-      },
-    });
-  };
-
-  handleEmailChange = (e) => {
-    this.setState({
-      personalInfo: {
-        name: this.state.personalInfo.name,
-        email: e.target.value,
-        phone: this.state.personalInfo.phone,
-      },
-    });
-  };
-
-  handlePhoneChange = (e) => {
-    this.setState({
-      personalInfo: {
-        name: this.state.personalInfo.name,
-        email: this.state.personalInfo.email,
-        phone: e.target.value,
-      },
-    });
-  };
-
-  handleInstitutionChange = (e) => {
-    let i = e.target.getAttribute("index");
+  handlePersonalChange = (e) => {
     let input = e.target.value;
-    let eduArray = this.state.educationArray;
+    let key = e.target.name;
+    let copyState = this.state.personalInfo;
 
-    eduArray[i] = {
-      ...eduArray[i],
-      institution: input,
+    copyState = {
+      ...copyState,
+      [key]: input,
     };
-
-    this.setState({ educationArray: eduArray });
+    this.setState({ personalInfo: copyState });
   };
 
-  handleTitleChange = (e) => {
+  handleEducationChange = (e) => {
     let i = e.target.getAttribute("index");
     let input = e.target.value;
-    let eduArray = this.state.educationArray;
-
-    eduArray[i] = {
-      ...eduArray[i],
-      title: input,
-    };
-
-    this.setState({ educationArray: eduArray });
-  };
-
-  handleTitleDateChange = (e) => {
-    let i = e.target.getAttribute("index");
-    let input = e.target.value;
+    let key = e.target.name;
     let copyArray = this.state.educationArray;
 
     copyArray[i] = {
       ...copyArray[i],
-      titleDate: input,
+      [key]: input,
     };
 
     this.setState({ educationArray: copyArray });
   };
 
-  handleCompanyChange = (e) => {
+  handleExperienceChange = (e) => {
     let i = e.target.getAttribute("index");
     let input = e.target.value;
     let copyArray = this.state.experienceArray;
+    let key = e.target.name;
 
     copyArray[i] = {
       ...copyArray[i],
-      company: input,
-    };
-
-    this.setState({ experienceArray: copyArray });
-  };
-
-  handlePositionChange = (e) => {
-    let i = e.target.getAttribute("index");
-    let input = e.target.value;
-    let copyArray = this.state.experienceArray;
-
-    copyArray[i] = {
-      ...copyArray[i],
-      position: input,
-    };
-
-    this.setState({ experienceArray: copyArray });
-  };
-
-  handleTasksChange = (e) => {
-    let i = e.target.getAttribute("index");
-    let input = e.target.value;
-    let copyArray = this.state.experienceArray;
-
-    copyArray[i] = {
-      ...copyArray[i],
-      tasks: input,
-    };
-
-    this.setState({ experienceArray: copyArray });
-  };
-
-  handleDateFromChange = (e) => {
-    let i = e.target.getAttribute("index");
-    let input = e.target.value;
-    let copyArray = this.state.experienceArray;
-
-    copyArray[i] = {
-      ...copyArray[i],
-      dateFrom: input,
-    };
-
-    this.setState({ experienceArray: copyArray });
-  };
-
-  handleDateToChange = (e) => {
-    let i = e.target.getAttribute("index");
-    let input = e.target.value;
-    let copyArray = this.state.experienceArray;
-
-    copyArray[i] = {
-      ...copyArray[i],
-      dateTo: input,
+      [key]: input,
     };
 
     this.setState({ experienceArray: copyArray });
@@ -291,7 +197,8 @@ class App extends Component {
               <label>Name:</label>
               <input
                 type="text"
-                onChange={this.handleNameChange}
+                name="name"
+                onChange={this.handlePersonalChange}
                 value={personalInfo.name}
               ></input>
               <br></br>
@@ -299,14 +206,16 @@ class App extends Component {
               <input
                 value={personalInfo.email}
                 type="email"
-                onChange={this.handleEmailChange}
+                name="email"
+                onChange={this.handlePersonalChange}
               ></input>
               <br></br>
               <label>Phone:</label>
               <input
                 value={personalInfo.phone}
-                type="number"
-                onChange={this.handlePhoneChange}
+                type="string"
+                name="phone"
+                onChange={this.handlePersonalChange}
               ></input>
             </div>
             <br></br>
@@ -314,9 +223,7 @@ class App extends Component {
             <div className="section">
               <EduInput
                 educationArray={educationArray}
-                handleInstitutionChange={this.handleInstitutionChange}
-                handleTitleChange={this.handleTitleChange}
-                handleTitleDateChange={this.handleTitleDateChange}
+                handleEducationChange={this.handleEducationChange}
                 deleteEdu={this.deleteEdu}
               />
               <button onClick={this.addEdu}>Add education info</button>
@@ -326,11 +233,7 @@ class App extends Component {
             <div className="section">
               <ExpInput
                 experienceArray={experienceArray}
-                handleCompanyChange={this.handleCompanyChange}
-                handlePositionChange={this.handlePositionChange}
-                handleTasksChange={this.handleTasksChange}
-                handleDateFromChange={this.handleDateFromChange}
-                handleDateToChange={this.handleDateToChange}
+                handleExperienceChange={this.handleExperienceChange}
                 deleteExp={this.deleteExp}
               />
               <button onClick={this.addExp}>Add experience info</button>
@@ -338,10 +241,12 @@ class App extends Component {
             <br></br>
             <br></br>
           </form>
+          <div>
+            <button type="submit">SUBMIT CV</button>
+            <button onClick={this.loadExample}>CV example</button>
+            <button onClick={this.resetForm}>Reset form</button>
+          </div>
         </div>
-        <button type="submit">SUBMIT CV</button>
-        <button onClick={this.loadExample}>CV example</button>
-        <button onClick={this.resetForm}>Reset form</button>
         <CVDisplay
           personalInfo={personalInfo}
           educationArray={educationArray}
