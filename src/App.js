@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import uniqid from "uniqid";
 import CVDisplay from "./components/CVDisplay";
+import PersonalInput from "./components/PersonalInput";
 import EduInput from "./components/EduInput";
 import ExpInput from "./components/ExpInput";
 
@@ -194,29 +195,10 @@ class App extends Component {
         <div>
           <form onSubmit={this.onSubmitCV}>
             <div className="section">
-              <label>Name:</label>
-              <input
-                type="text"
-                name="name"
-                onChange={this.handlePersonalChange}
-                value={personalInfo.name}
-              ></input>
-              <br></br>
-              <label>E-mail:</label>
-              <input
-                value={personalInfo.email}
-                type="email"
-                name="email"
-                onChange={this.handlePersonalChange}
-              ></input>
-              <br></br>
-              <label>Phone:</label>
-              <input
-                value={personalInfo.phone}
-                type="string"
-                name="phone"
-                onChange={this.handlePersonalChange}
-              ></input>
+              <PersonalInput
+                personalInfo={personalInfo}
+                handlePersonalChange={this.handlePersonalChange}
+              />
             </div>
             <br></br>
 
