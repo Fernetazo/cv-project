@@ -239,8 +239,6 @@ class App extends Component {
                   addExp={this.addExp}
                 />
               </div>
-              <br></br>
-              <br></br>
             </fieldset>
 
             <ToggleCV />
