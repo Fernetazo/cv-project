@@ -4,11 +4,19 @@ const ExpInput = (props) => {
   const { experienceArray, handleExperienceChange, deleteExp, addExp } = props;
 
   return (
-    <div>
-      <div>
-        {experienceArray.map((e, index) => {
-          return (
-            <div key={e.id}>
+    <div className="leftSideSection">
+      {experienceArray.map((e, index) => {
+        return (
+          <div key={e.id} className="itemInput">
+            <div className="leftSideSubSection">
+              <button
+                className="clearButton"
+                index={index}
+                onClick={deleteExp}
+                title="Delete this item"
+              >
+                <div className="material-icons">clear</div>
+              </button>
               <label>Company:</label>
               <input
                 type="text"
@@ -17,8 +25,8 @@ const ExpInput = (props) => {
                 name="company"
                 onChange={handleExperienceChange}
               ></input>
-              <br></br>
-
+            </div>
+            <div className="leftSideSubSection">
               <label>Position:</label>
               <input
                 type="text"
@@ -27,8 +35,8 @@ const ExpInput = (props) => {
                 name="position"
                 onChange={handleExperienceChange}
               ></input>
-              <br></br>
-
+            </div>
+            <div className="leftSideSubSection">
               <label>Tasks:</label>
               <input
                 type="text"
@@ -37,8 +45,9 @@ const ExpInput = (props) => {
                 name="tasks"
                 onChange={handleExperienceChange}
               ></input>
-              <br></br>
-
+            </div>
+            <div className="leftSideSubSection">
+              {" "}
               <label>Date from:</label>
               <input
                 type="number"
@@ -48,9 +57,7 @@ const ExpInput = (props) => {
                 name="dateFrom"
                 onChange={handleExperienceChange}
               ></input>
-              <br></br>
-
-              <label>Date to:</label>
+              <label> to </label>
               <input
                 type="number"
                 index={index}
@@ -59,18 +66,13 @@ const ExpInput = (props) => {
                 name="dateTo"
                 onChange={handleExperienceChange}
               ></input>
-              <br></br>
-
-              <button index={index} onClick={deleteExp}>
-                Delete this item
-              </button>
             </div>
-          );
-        })}
-        <br></br>
-        <button onClick={addExp}>Add experience info</button>
-      </div>
-      <br></br>
+          </div>
+        );
+      })}
+      <button className="addItemButton" onClick={addExp}>
+        Add experience info
+      </button>
     </div>
   );
 };

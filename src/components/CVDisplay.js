@@ -17,11 +17,11 @@ const CVDisplay = (props) => {
           </div>
           <div className="contact">
             <div className="subContact">
-              <div className="material-icons">email</div>
+              <div className="material-icons contactIcon">email</div>
               <div>{personalInfo.email}</div>
             </div>
             <div className="subContact">
-              <div className="material-icons">phone</div>{" "}
+              <div className="material-icons contactIcon">phone</div>{" "}
               <div>{personalInfo.phone}</div>
             </div>
           </div>

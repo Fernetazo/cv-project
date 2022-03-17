@@ -202,9 +202,17 @@ class App extends Component {
 
     const ToggleCV = () => {
       if (this.state.isEditing === true) {
-        return <button type="submit">SUBMIT CV</button>;
+        return (
+          <button className="submitButton" type="submit">
+            SUBMIT CV
+          </button>
+        );
       } else {
-        return <button type="submit">EDIT CV</button>;
+        return (
+          <button className="submitButton" type="submit">
+            EDIT CV
+          </button>
+        );
       }
     };
 
@@ -213,37 +221,27 @@ class App extends Component {
         <div className="leftSide">
           <form onSubmit={this.onSubmitCV}>
             <fieldset disabled={!this.state.isEditing}>
-              <div className="section">
-                <PersonalInput
-                  personalInfo={personalInfo}
-                  handlePersonalChange={this.handlePersonalChange}
-                />
-              </div>
-              <br></br>
-
-              <div className="section">
-                <EduInput
-                  educationArray={educationArray}
-                  handleEducationChange={this.handleEducationChange}
-                  deleteEdu={this.deleteEdu}
-                  addEdu={this.addEdu}
-                />
-              </div>
-              <br></br>
-
-              <div className="section">
-                <ExpInput
-                  experienceArray={experienceArray}
-                  handleExperienceChange={this.handleExperienceChange}
-                  deleteExp={this.deleteExp}
-                  addExp={this.addExp}
-                />
-              </div>
+              <PersonalInput
+                personalInfo={personalInfo}
+                handlePersonalChange={this.handlePersonalChange}
+              />
+              <EduInput
+                educationArray={educationArray}
+                handleEducationChange={this.handleEducationChange}
+                deleteEdu={this.deleteEdu}
+                addEdu={this.addEdu}
+              />
+              <ExpInput
+                experienceArray={experienceArray}
+                handleExperienceChange={this.handleExperienceChange}
+                deleteExp={this.deleteExp}
+                addExp={this.addExp}
+              />
             </fieldset>
 
             <ToggleCV />
           </form>
-          <div className="buttons">
+          <div className="bottomButtons">
             <button onClick={this.loadExample}>CV example</button>
             <button onClick={this.resetForm}>Reset form</button>
           </div>
