@@ -70,7 +70,8 @@ class App extends Component {
     this.setState({ experienceArray: copyArray });
   };
 
-  addEdu = () => {
+  addEdu = (e) => {
+    e.preventDefault();
     let newEmpty = {
       id: uniqid(),
       institution: "",
@@ -84,6 +85,7 @@ class App extends Component {
   };
 
   deleteEdu = (e) => {
+    e.preventDefault();
     let i = parseInt(e.target.getAttribute("index"));
 
     let filteredArray = this.state.educationArray.filter(
@@ -92,7 +94,9 @@ class App extends Component {
     this.setState({ educationArray: filteredArray });
   };
 
-  addExp = () => {
+  addExp = (e) => {
+    e.preventDefault();
+
     let newEmpty = {
       id: uniqid(),
       company: "",
@@ -188,7 +192,6 @@ class App extends Component {
 
   onSubmitCV = (e) => {
     e.preventDefault();
-
     if (this.state.isEditing === true) {
       this.setState({ isEditing: false });
     } else {
@@ -200,20 +203,12 @@ class App extends Component {
     const { isEditing, personalInfo, educationArray, experienceArray } =
       this.state;
 
-    const ToggleCV = () => {
-      if (this.state.isEditing === true) {
-        return (
-          <button className="submitButton" type="submit">
-            SUBMIT CV
-          </button>
-        );
-      } else {
-        return (
-          <button className="submitButton" type="submit">
-            EDIT CV
-          </button>
-        );
-      }
+    const ToggleCV = (e) => {
+      return (
+        <button className="submitButton" type="submit">
+          {this.state.isEditing ? "SUBMIT" : "EDIT"} CV
+        </button>
+      );
     };
 
     return (
@@ -238,7 +233,6 @@ class App extends Component {
                 addExp={this.addExp}
               />
             </fieldset>
-
             <ToggleCV />
           </form>
           <div className="bottomButtons">

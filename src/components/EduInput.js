@@ -10,12 +10,12 @@ const EduInput = (props) => {
           <div key={e.id} className="itemInput">
             <div className="leftSideSubSection">
               <button
-                className="clearButton"
+                className="clearButton material-icons"
                 index={index}
                 onClick={deleteEdu}
                 title="Delete this item"
               >
-                <div className="material-icons">clear</div>
+                clear
               </button>
               <label>Institution:</label>
               <input
