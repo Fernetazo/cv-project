@@ -1,65 +1,64 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
 import CVDisplay from "./components/CVDisplay";
 import PersonalInput from "./components/PersonalInput";
 import EduInput from "./components/EduInput";
 import ExpInput from "./components/ExpInput";
 
-class App extends Component {
-  constructor() {
-    super();
+const App = () => {
+  const [isEditing, setIsEditing] = useState(true);
 
-    this.state = {
-      isEditing: true,
+  const [personalInfo, setPersonalInfo] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
 
-      personalInfo: { name: "", email: "", phone: "" },
+  const [educationArray, setEducationArray] = useState([
+    { id: uniqid(), institution: "", title: "", titleDate: "" },
+  ]);
 
-      educationArray: [
-        { id: uniqid(), institution: "", title: "", titleDate: "" },
-      ],
-      experienceArray: [
-        {
-          id: uniqid(),
-          company: "",
-          position: "",
-          tasks: "",
-          dateFrom: "",
-          dateTo: "",
-        },
-      ],
-    };
-  }
+  const [experienceArray, setExperienceArray] = useState([
+    {
+      id: uniqid(),
+      company: "",
+      position: "",
+      tasks: "",
+      dateFrom: "",
+      dateTo: "",
+    },
+  ]);
 
-  handlePersonalChange = (e) => {
+  const handlePersonalChange = (e) => {
     let input = e.target.value;
     let key = e.target.name;
-    let copyState = this.state.personalInfo;
+    let copyState = personalInfo;
 
     copyState = {
       ...copyState,
       [key]: input,
     };
-    this.setState({ personalInfo: copyState });
+    setPersonalInfo(copyState);
   };
 
-  handleEducationChange = (e) => {
+  const handleEducationChange = (e) => {
     let i = e.target.getAttribute("index");
     let input = e.target.value;
     let key = e.target.name;
-    let copyArray = this.state.educationArray;
+    let copyArray = educationArray;
 
     copyArray[i] = {
       ...copyArray[i],
       [key]: input,
     };
 
-    this.setState({ educationArray: copyArray });
+    setEducationArray([...copyArray]);
   };
 
-  handleExperienceChange = (e) => {
+  const handleExperienceChange = (e) => {
     let i = e.target.getAttribute("index");
     let input = e.target.value;
-    let copyArray = this.state.experienceArray;
+    let copyArray = experienceArray;
     let key = e.target.name;
 
     copyArray[i] = {
@@ -67,10 +66,10 @@ class App extends Component {
       [key]: input,
     };
 
-    this.setState({ experienceArray: copyArray });
+    setExperienceArray([...copyArray]);
   };
 
-  addEdu = (e) => {
+  const addEdu = (e) => {
     e.preventDefault();
     let newEmpty = {
       id: uniqid(),
@@ -79,22 +78,18 @@ class App extends Component {
       titleDate: "",
     };
 
-    this.setState({
-      educationArray: this.state.educationArray.concat(newEmpty),
-    });
+    setEducationArray(educationArray.concat(newEmpty));
   };
 
-  deleteEdu = (e) => {
+  const deleteEdu = (e) => {
     e.preventDefault();
     let i = parseInt(e.target.getAttribute("index"));
 
-    let filteredArray = this.state.educationArray.filter(
-      (e, index) => index !== i
-    );
-    this.setState({ educationArray: filteredArray });
+    let filteredArray = educationArray.filter((e, index) => index !== i);
+    setEducationArray(filteredArray);
   };
 
-  addExp = (e) => {
+  const addExp = (e) => {
     e.preventDefault();
 
     let newEmpty = {
@@ -106,149 +101,136 @@ class App extends Component {
       dateTo: "",
     };
 
-    this.setState({
-      experienceArray: this.state.experienceArray.concat(newEmpty),
-    });
+    setExperienceArray(experienceArray.concat(newEmpty));
   };
 
-  deleteExp = (e) => {
+  const deleteExp = (e) => {
     let i = parseInt(e.target.getAttribute("index"));
 
-    let filteredArray = this.state.experienceArray.filter(
-      (e, index) => index !== i
-    );
-    this.setState({ experienceArray: filteredArray });
+    let filteredArray = experienceArray.filter((e, index) => index !== i);
+    setExperienceArray(filteredArray);
   };
 
-  loadExample = () => {
-    this.setState({
-      personalInfo: {
-        name: "John Doe",
-        email: "jdoe@nobody.com",
-        phone: "555-5453",
+  const loadExample = () => {
+    setPersonalInfo({
+      name: "John Doe",
+      email: "jdoe@nobody.com",
+      phone: "555-5453",
+    });
+    setEducationArray([
+      {
+        id: uniqid(),
+        institution: "Harvard University",
+        title: "Computer Science degree",
+        titleDate: "2022",
       },
-      educationArray: [
-        {
-          id: uniqid(),
-          institution: "Harvard University",
-          title: "Computer Science degree",
-          titleDate: "2022",
-        },
-        {
-          id: uniqid(),
-          institution: "Royal School of Science",
-          title: "Technician computer",
-          titleDate: "2006",
-        },
-      ],
-      experienceArray: [
-        {
-          id: uniqid(),
-          company: "IBM",
-          position: "Fullstack web developer",
-          tasks: "Make webpages. Testing",
-          dateFrom: "2018",
-          dateTo: "2022",
-        },
-        {
-          id: uniqid(),
-          company: "ICBC",
-          position: "Cyber security",
-          tasks: "Overall secirity of the bank's webpage.",
-          dateFrom: "2017",
-          dateTo: "2014",
-        },
-        {
-          id: uniqid(),
-          company: "IBM",
-          position: "ATM technician",
-          tasks: "Repair and maintenance of ATM machines.",
-          dateFrom: "2017",
-          dateTo: "2014",
-        },
-      ],
-    });
+      {
+        id: uniqid(),
+        institution: "Royal School of Science",
+        title: "Technician computer",
+        titleDate: "2006",
+      },
+    ]);
+    setExperienceArray([
+      {
+        id: uniqid(),
+        company: "IBM",
+        position: "Fullstack web developer",
+        tasks: "Make webpages. Testing",
+        dateFrom: "2018",
+        dateTo: "2022",
+      },
+      {
+        id: uniqid(),
+        company: "ICBC",
+        position: "Cyber security",
+        tasks: "Overall secirity of the bank's webpage.",
+        dateFrom: "2017",
+        dateTo: "2014",
+      },
+      {
+        id: uniqid(),
+        company: "IBM",
+        position: "ATM technician",
+        tasks: "Repair and maintenance of ATM machines.",
+        dateFrom: "2017",
+        dateTo: "2014",
+      },
+    ]);
   };
 
-  resetForm = () => {
-    this.setState({
-      personalInfo: { name: "", email: "", phone: "" },
+  const resetForm = () => {
+    setPersonalInfo({ name: "", email: "", phone: "" });
 
-      educationArray: [
-        { id: uniqid(), institution: "", title: "", titleDate: "" },
-      ],
-      experienceArray: [
-        {
-          id: uniqid(),
-          company: "",
-          position: "",
-          tasks: "",
-          dateFrom: "",
-          dateTo: "",
-        },
-      ],
-    });
+    setEducationArray([
+      { id: uniqid(), institution: "", title: "", titleDate: "" },
+    ]);
+    setExperienceArray([
+      {
+        id: uniqid(),
+        company: "",
+        position: "",
+        tasks: "",
+        dateFrom: "",
+        dateTo: "",
+      },
+    ]);
   };
 
-  onSubmitCV = (e) => {
+  const onSubmitCV = (e) => {
     e.preventDefault();
-    if (this.state.isEditing === true) {
-      this.setState({ isEditing: false });
+    if (isEditing === true) {
+      setIsEditing(false);
     } else {
-      this.setState({ isEditing: true });
+      setIsEditing(true);
     }
   };
 
-  render() {
-    const { isEditing, personalInfo, educationArray, experienceArray } =
-      this.state;
-
-    const ToggleCV = (e) => {
-      return (
-        <button className="submitButton" type="submit">
-          {this.state.isEditing ? "SUBMIT" : "EDIT"} CV
-        </button>
-      );
-    };
-
+  const ToggleCV = (e) => {
     return (
-      <div className="main">
-        <div className="leftSide">
-          <form onSubmit={this.onSubmitCV}>
-            <fieldset disabled={!this.state.isEditing}>
-              <PersonalInput
-                personalInfo={personalInfo}
-                handlePersonalChange={this.handlePersonalChange}
-              />
-              <EduInput
-                educationArray={educationArray}
-                handleEducationChange={this.handleEducationChange}
-                deleteEdu={this.deleteEdu}
-                addEdu={this.addEdu}
-              />
-              <ExpInput
-                experienceArray={experienceArray}
-                handleExperienceChange={this.handleExperienceChange}
-                deleteExp={this.deleteExp}
-                addExp={this.addExp}
-              />
-            </fieldset>
-            <ToggleCV />
-          </form>
-          <div className="bottomButtons">
-            <button onClick={this.loadExample}>CV example</button>
-            <button onClick={this.resetForm}>Reset form</button>
-          </div>
-        </div>
-        <CVDisplay
-          isEditing={isEditing}
-          personalInfo={personalInfo}
-          educationArray={educationArray}
-          experienceArray={experienceArray}
-        />
-      </div>
+      <button className="submitButton" type="submit">
+        {isEditing ? "SUBMIT" : "EDIT"} CV
+      </button>
     );
-  }
-}
+  };
+
+  return (
+    <div className="main">
+      <div className="leftSide">
+        <form onSubmit={onSubmitCV}>
+          <fieldset disabled={!isEditing}>
+            <PersonalInput
+              personalInfo={personalInfo}
+              handlePersonalChange={handlePersonalChange}
+            />
+            <EduInput
+              educationArray={educationArray}
+              handleEducationChange={handleEducationChange}
+              deleteEdu={deleteEdu}
+              addEdu={addEdu}
+            />
+            <ExpInput
+              experienceArray={experienceArray}
+              handleExperienceChange={handleExperienceChange}
+              deleteExp={deleteExp}
+              addExp={addExp}
+            />
+          </fieldset>
+          <ToggleCV />
+        </form>
+        <div className="bottomButtons">
+          <button onClick={loadExample}>CV example</button>
+          <button onClick={resetForm}>Reset form</button>
+        </div>
+      </div>
+      <CVDisplay
+        isEditing={isEditing}
+        personalInfo={personalInfo}
+        educationArray={educationArray}
+        experienceArray={experienceArray}
+      />
+    </div>
+  );
+};
 
 export default App;
